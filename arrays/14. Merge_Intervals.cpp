@@ -156,43 +156,44 @@ void Graph::DFS(){
 //     vll segment_tree(4*n);
 //     build(segment_tree, 1,0, n-1, input);
 // }
+void sreverse(stack<vi>&s){
+    vi temp;
+    stack<vector<int>>tempstack;
+    while(!s.empty()){
+        temp=s.top();
+        tempstack.push(temp);
+        s.pop();
+    }
+    s=tempstack;
+}
 void fun(){
-    int n, m;
-    cin>>n>>m;
-    vi input(n);
-    vi input2(m);
+    int n;
+    cin>>n;
+    vvi v(n,vi(2,0));
     fr(i,0,n,1){
-        cin>>input[i];
+        cin>>v[i][0];
+        cin>>v[i][1];
     }
-    fr(i,0,m,1){
-        cin>>input2[i];
+    stack<vi>curr;
+    curr.push(v[0]);
+    int ind=1;
+    while(!curr.empty()&&ind<n){
+        vi temp=curr.top();
+        if(temp[1]>=v[ind][0]){
+            temp[1]=max(temp[1],v[ind][1]);
+            curr.pop();
+            curr.push(temp);
+        }
+        else{
+            curr.push(v[ind]);
+        }
+        ind++;
     }
-    // sorting both arrays and using 2 pointer approach
-    // Space Complexity O(1) Time Complexity O(nlog(n)), Detailed Time Complexity: O(nlog(n) + mlog(m) + n + m)
-    int f=0, s=0, counter=0;
-    sort(all(input));
-    sort(all(input2));
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        counter++;
-        if(input[f]<input2[s])f++;
-        else s++;
-        if(counter==n)
-        break;
-    }
-    cout<<endl;
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        if(input[f]<input2[s])f++;
-        else s++;
-    }
-    while(f<n){
-        cout<<input[f]<<" ";
-        f++;
-    }
-    while(s<m){
-        cout<<input2[s]<<" ";
-        s++;
+    sreverse(curr);
+    while(!curr.empty()){
+        vi temp=curr.top();
+        cout<<temp[0]<<" "<<temp[1]<<"\n";
+        curr.pop();
     }
 }
 int main(){

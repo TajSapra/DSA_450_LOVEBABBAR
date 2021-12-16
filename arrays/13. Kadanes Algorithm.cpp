@@ -1,3 +1,4 @@
+// Same as 8. Largest_Sum_subarray.cpp
 #include<bits/stdc++.h> 
 #define ll long long int
 #define pb push_back
@@ -157,43 +158,28 @@ void Graph::DFS(){
 //     build(segment_tree, 1,0, n-1, input);
 // }
 void fun(){
-    int n, m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
     vi input(n);
-    vi input2(m);
     fr(i,0,n,1){
         cin>>input[i];
     }
-    fr(i,0,m,1){
-        cin>>input2[i];
+    int ans=0, curr=0;
+    int mini=INT_MIN,key=0;
+    // kadane's algorithm
+    for(int i=0;i<n;i++){
+        curr+=input[i];
+        if(curr<0){
+            curr=0;
+        }
+        if(input[i]==0){key==1;}
+        ans=max(ans, curr);
+        mini=max(mini, input[i]);
     }
-    // sorting both arrays and using 2 pointer approach
-    // Space Complexity O(1) Time Complexity O(nlog(n)), Detailed Time Complexity: O(nlog(n) + mlog(m) + n + m)
-    int f=0, s=0, counter=0;
-    sort(all(input));
-    sort(all(input2));
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        counter++;
-        if(input[f]<input2[s])f++;
-        else s++;
-        if(counter==n)
-        break;
+    if(key!=1){
+        ans=mini;
     }
-    cout<<endl;
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        if(input[f]<input2[s])f++;
-        else s++;
-    }
-    while(f<n){
-        cout<<input[f]<<" ";
-        f++;
-    }
-    while(s<m){
-        cout<<input2[s]<<" ";
-        s++;
-    }
+    cout<<ans<<"\n";
 }
 int main(){
     int t=1;

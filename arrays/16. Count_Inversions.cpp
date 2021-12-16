@@ -157,43 +157,13 @@ void Graph::DFS(){
 //     build(segment_tree, 1,0, n-1, input);
 // }
 void fun(){
-    int n, m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
     vi input(n);
-    vi input2(m);
     fr(i,0,n,1){
         cin>>input[i];
     }
-    fr(i,0,m,1){
-        cin>>input2[i];
-    }
-    // sorting both arrays and using 2 pointer approach
-    // Space Complexity O(1) Time Complexity O(nlog(n)), Detailed Time Complexity: O(nlog(n) + mlog(m) + n + m)
-    int f=0, s=0, counter=0;
-    sort(all(input));
-    sort(all(input2));
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        counter++;
-        if(input[f]<input2[s])f++;
-        else s++;
-        if(counter==n)
-        break;
-    }
-    cout<<endl;
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        if(input[f]<input2[s])f++;
-        else s++;
-    }
-    while(f<n){
-        cout<<input[f]<<" ";
-        f++;
-    }
-    while(s<m){
-        cout<<input2[s]<<" ";
-        s++;
-    }
+    
 }
 int main(){
     int t=1;
