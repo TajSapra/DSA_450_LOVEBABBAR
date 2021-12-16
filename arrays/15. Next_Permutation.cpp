@@ -157,43 +157,37 @@ void Graph::DFS(){
 //     build(segment_tree, 1,0, n-1, input);
 // }
 void fun(){
-    int n, m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
     vi input(n);
-    vi input2(m);
     fr(i,0,n,1){
         cin>>input[i];
     }
-    fr(i,0,m,1){
-        cin>>input2[i];
+    // Method: Traverse from right to left and find first index such that input[i]<input[i+1], mark i as ind1
+    // now traverse again from n to ind1 and find the first number such that input[i]>input[ind1], mark i as ind2
+    // swap input[ind1] and input[ind2]
+    // reverse the subarray from ind1+1 to n
+    int ind1=-1, ind2=-1;
+    for(int i=n-2;i>=0;i--){
+        if(input[i]<input[i+1]){
+            ind1=i;
+            break;
+        }
     }
-    // sorting both arrays and using 2 pointer approach
-    // Space Complexity O(1) Time Complexity O(nlog(n)), Detailed Time Complexity: O(nlog(n) + mlog(m) + n + m)
-    int f=0, s=0, counter=0;
-    sort(all(input));
-    sort(all(input2));
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        counter++;
-        if(input[f]<input2[s])f++;
-        else s++;
-        if(counter==n)
-        break;
+    if(ind1==-1){
+        reverse(all(input));
+        printvec(input);
+        return;
     }
-    cout<<endl;
-    while(f<n && s<m){
-        cout<<min(input[f], input2[s])<<" ";
-        if(input[f]<input2[s])f++;
-        else s++;
+    for(int i=n-1;i>=ind1;i--){
+        if(input[i]>input[ind1]){
+            ind2=i;
+            break;
+        }
     }
-    while(f<n){
-        cout<<input[f]<<" ";
-        f++;
-    }
-    while(s<m){
-        cout<<input2[s]<<" ";
-        s++;
-    }
+    swap(input[ind1], input[ind2]);
+    reverse(input.begin()+ind1+1, input.end());
+    printvec(input);
 }
 int main(){
     int t=1;
