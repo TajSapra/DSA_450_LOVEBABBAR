@@ -163,14 +163,7 @@ void fun(){
     fr(i,0,n,1){
         cin>>input[i];
     }
-    int fb=INT_MIN, fs=0, sb=INT_MIN,ss=0;
-    fr(i,0,n,1){
-        fb=max(fb,(-1)*input[i]);
-        fs=max(fs,input[i]+fb);
-        sb=max(sb,fs-input[i]);
-        ss=max(ss,input[i]+sb);
-    }
-    cout<<ss;
+    // to be continued
 }
 int main(){
     int t=1;
