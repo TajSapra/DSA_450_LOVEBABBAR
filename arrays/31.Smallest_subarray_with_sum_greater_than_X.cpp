@@ -157,35 +157,30 @@ void Graph::DFS(){
 //     build(segment_tree, 1,0, n-1, input);
 // }
 void fun(){
-    int n;
-    cin>>n;
+    int n,x;
+    cin>>n>>x;
     vi input(n);
     fr(i,0,n,1){
         cin>>input[i];
     }
-    int s=0,e=n-1, leftmax=0, rightmax=0, ans=0;
-    while(s<=e){
-        if(input[s]<input[e]){
-            if(leftmax<input[s]){
-                leftmax=input[s];
-            }
-            else{
-                ans+=leftmax-input[s];
-            }
-            s++;
+    int s=0, e=0, found=0;
+    int ans=INT_MAX, curr=input[0];
+    while(s<n&&e<n){
+        if(curr<x){
+            e++;
+            curr+=input[e];
         }
         else{
-            if(rightmax<input[e]){
-                rightmax=input[e];
-            }
-            else{
-                ans+=rightmax-input[e];
-            }
-            e--;
+            found=1;
+            curr-=input[s];
+            ans=min(ans, e-s+1);
+            s++;
         }
-    }
-    cout<<ans<<endl;
-    // to be continued
+    }    
+    if(found)
+        cout<<ans<<"\n";
+    else
+        cout<<-1<<"\n";
 }
 int main(){
     int t=1;

@@ -157,35 +157,19 @@ void Graph::DFS(){
 //     build(segment_tree, 1,0, n-1, input);
 // }
 void fun(){
-    int n;
-    cin>>n;
+    int n,m;
+    cin>>n>>m;
     vi input(n);
     fr(i,0,n,1){
         cin>>input[i];
     }
-    int s=0,e=n-1, leftmax=0, rightmax=0, ans=0;
-    while(s<=e){
-        if(input[s]<input[e]){
-            if(leftmax<input[s]){
-                leftmax=input[s];
-            }
-            else{
-                ans+=leftmax-input[s];
-            }
-            s++;
-        }
-        else{
-            if(rightmax<input[e]){
-                rightmax=input[e];
-            }
-            else{
-                ans+=rightmax-input[e];
-            }
-            e--;
-        }
+    // logic is to find an element such that arr[i]-arr[i+m-1] is minimum
+    sort(all(input));
+    int ans=INT_MAX;
+    for(int i=0;i+m-1<n;i++){
+        ans=min(ans,input[i+m-1]-input[i]);
     }
-    cout<<ans<<endl;
-    // to be continued
+    cout<<ans<<"\n";
 }
 int main(){
     int t=1;
