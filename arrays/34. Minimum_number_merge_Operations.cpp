@@ -156,6 +156,25 @@ void Graph::DFS(){
 //     vll segment_tree(4*n);
 //     build(segment_tree, 1,0, n-1, input);
 // }
+int helper(vector<int>arr, int n){
+    int ans = 0;
+    for (int i=0,j=n-1; i<=j;){
+        if (arr[i] == arr[j]){
+            i++;j--;
+        }
+        else if (arr[i] > arr[j]){
+            j--;
+            arr[j] += arr[j+1] ;
+            ans++;
+        }
+        else{
+            i++;
+            arr[i] += arr[i-1];
+            ans++;
+        }
+    }
+    return ans;
+}
 void fun(){
     int n;
     cin>>n;
@@ -163,36 +182,7 @@ void fun(){
     fr(i,0,n,1){
         cin>>input[i];
     }
-    // to continue
-    int hi,lo;
-    cin>>lo>>hi;
-    int fp=0, sp=0, tp=0;
-    for(int i=0;i<n;i++){
-        if(input[i]<lo){
-            sp++;
-        }
-    }
-    tp=sp;
-    for(int i=0;i<n;i++){
-        if(input[i]>=lo&&input[i]<=hi){
-            tp++;
-        }
-    }
-    for(int i=n-1;i>fp;i--){
-        if(input[i]<lo){
-            swap(input[i],input[fp]);
-            fp++;
-            i++;
-        }
-    }
-    for(int i=0;i<tp&&tp<n;i++){
-        if(input[i]>hi){
-            swap(input[i],input[tp]);
-            tp++;
-            i--;
-        }
-    }
-    printvec(input);
+    cout<<helper(input,n);
 }
 int main(){
     int t=1;

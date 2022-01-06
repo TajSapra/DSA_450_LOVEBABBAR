@@ -163,36 +163,39 @@ void fun(){
     fr(i,0,n,1){
         cin>>input[i];
     }
-    // to continue
-    int hi,lo;
-    cin>>lo>>hi;
-    int fp=0, sp=0, tp=0;
-    for(int i=0;i<n;i++){
-        if(input[i]<lo){
-            sp++;
+    int x;
+    cin>>x;
+    int count=0;
+    fr(i,0,n,1){
+        if(input[i]<=x){
+            count++;
         }
     }
-    tp=sp;
-    for(int i=0;i<n;i++){
-        if(input[i]>=lo&&input[i]<=hi){
-            tp++;
+    int bad=0;
+    cout<<count<<endl;
+    for(int i=0;i<count;i++){
+        if(input[i]>x){
+            bad++;
         }
     }
-    for(int i=n-1;i>fp;i--){
-        if(input[i]<lo){
-            swap(input[i],input[fp]);
-            fp++;
-            i++;
+    int ans=bad;
+    fr(i,count,n,1){
+        cout<<i<<" "<<bad<<endl;;
+        if(input[i]>x){
+            bad++;
+            if(input[i-count]>x){
+                bad--;
+            }
         }
-    }
-    for(int i=0;i<tp&&tp<n;i++){
-        if(input[i]>hi){
-            swap(input[i],input[tp]);
-            tp++;
-            i--;
+        else{
+            bad--;
+            if(input[i-count]<=x){
+                bad++;
+            }
         }
+        ans=min(bad,ans);
     }
-    printvec(input);
+    cout<<ans<<"\n";
 }
 int main(){
     int t=1;
