@@ -156,43 +156,55 @@ void Graph::DFS(){
 //     vll segment_tree(4*n);
 //     build(segment_tree, 1,0, n-1, input);
 // }
+int median(vi input, int n){
+    if(n%2==0){
+        return (input[n/2]+input[n/2-1])/2;
+    }
+    else{
+        return input[n/2];
+    }
+}
+int solver(vi input, vi input1, int n){
+    if(n==0)return -1;
+    if(n==1){
+        return (input[0]+input1[0])/2;
+    }
+    if(n==2){
+        return (max(input[0],input1[0])+min(input[1],input1[1]))/2;
+    }
+    int m1=median(input,n);
+    int m2=median(input1,n);
+    if(m1==m2)    
+    return m1;
+    else if(m1<m2){
+        if(n%2==0){
+            vi temp=vector<int>(input.begin()+n/2-1,input.end());
+            return solver(temp,input1,n-n/2+1);
+        }
+        vi temp=vector<int>(input.begin()+n/2,input.end());
+        return solver(temp,input1,n-n/2);
+    }
+    else{
+        if(n%2==0){
+            vi temp=vector<int>(input1.begin()+n/2-1,input1.end());
+            return solver(temp,input,n-n/2+1);
+        }
+        vi temp=vector<int>(input1.begin()+n/2,input1.end());
+        return solver(temp,input,n-n/2);
+        
+    }
+}
 void fun(){
     int n;
     cin>>n;
-    vi input(n);
+    vi input(n), input1(n);
     fr(i,0,n,1){
         cin>>input[i];
     }
-    // to continue
-    int hi,lo;
-    cin>>lo>>hi;
-    int fp=0, sp=0, tp=0;
-    for(int i=0;i<n;i++){
-        if(input[i]<lo){
-            sp++;
-        }
+    fr(i,0,n,1){
+        cin>>input1[i];
     }
-    tp=sp;
-    for(int i=0;i<n;i++){
-        if(input[i]>=lo&&input[i]<=hi){
-            tp++;
-        }
-    }
-    for(int i=n-1;i>fp;i--){
-        if(input[i]<lo){
-            swap(input[i],input[fp]);
-            fp++;
-            i++;
-        }
-    }
-    for(int i=0;i<tp&&tp<n;i++){
-        if(input[i]>hi){
-            swap(input[i],input[tp]);
-            tp++;
-            i--;
-        }
-    }
-    printvec(input);
+    cout<<solver(input,input1,n);
 }
 int main(){
     int t=1;
